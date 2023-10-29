@@ -1,0 +1,45 @@
+.nav{
+    height:60px;
+    background-color: #000058;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 25px;
+}
+.nav a{
+    font-size: 20px;
+    font-family: "Georgia";
+    font-weight: bold;
+    color: white;
+}
+
+a[routerLink] {
+    text-decoration: none;
+  }
+
+.cart{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.cart {
+    display: flex;
+    background-color: white;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 10px;
+    border-radius: 3px;
+    height: 40px;
+}
+
+.cart p {
+    height: 22px;
+    width: 22px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 22px;
+    background-color: goldenrod;
+    color: white;
+}
