@@ -4,6 +4,7 @@ import { WorldHttpService } from "../world-http.service";
 import { Location } from "@angular/common";
 import { AppInterface } from "../../app/application-interface";
 import { Subscription } from 'rxjs';
+import { CountriesDTO } from '../dtos/countries-dto';
 
 @Component({
   selector: 'app-country',
@@ -14,7 +15,7 @@ import { Subscription } from 'rxjs';
 export class CountryComponent implements OnInit {
 
 
-  public countries: AppInterface[]=[];
+  public countries: CountriesDTO[]=[];
   public returnParameters!: Subscription|undefined;
   public currencyParameter: boolean = false;
   public languageParameter: boolean = false;

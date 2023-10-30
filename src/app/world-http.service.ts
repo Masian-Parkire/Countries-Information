@@ -9,8 +9,8 @@ export class WorldHttpService {
 
   constructor(private _http: HttpClient) {}
 
-  public getAllCountriesFromRegion(region: string): Observable<any> {
-    return this._http.get(`${this.url}region/${region}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
+  public getAllCountriesFromRegion(region: string, params: any): Observable<any> {
+    return this.http.get(`${this.url}region/${region}?`, {params})
       .pipe(
         catchError(this.handleError)
       );
