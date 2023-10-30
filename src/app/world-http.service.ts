@@ -1,51 +1,38 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpErrorResponse } from "@angular/common/http"
+import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
-import "rxjs/add/operator/do"
-import "rxjs/add/operator/catch"
+import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 
 @Injectable()
 export class WorldHttpService {
+  public url = 'https://restcountries.eu/rest/v2/';
 
-  public url = "https://restcountries.eu/rest/v2/" //base url
+  constructor(private _http: HttpClient) {}
 
-  constructor(public _http: HttpClient) {
-
-  }
-
-  public getAllCountriesFromRegion(region: any): Observable<any> {
-
+  public getAllCountriesFromRegion(region: string): Observable<any> {
     return this._http.get(`${this.url}region/${region}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-
-  }
-  public getAllCountriesFromSubRegion(sub: any): Observable<any> {
-    return this._http.get(`${this.url}subregion/${sub}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-
-  }
-  //http call to get single country data
-  public getSingleCountryInfo(country: any): Observable<any> {
-
-    return this._http.get(`${this.url}name/${country}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-//http call to get countries by language
-  public getCountryByLanguage(code: any) {
+  public getCountryByLanguage(code: string): Observable<any> {
     return this._http.get(`${this.url}lang/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-//http call to get countries by currency
-  public getCountryByCurrency(code: any): Observable<any> {
+  public getCountryByCurrency(code: string): Observable<any> {
     return this._http.get(`${this.url}currency/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-
+      .pipe(
+        catchError(this.handleError)
+      );
   }
 
-
-//error handler
-public handleError(err: HttpErrorResponse) {
-    console.log("Error Handler");
-    console.error(err.message); // Using console.error for errors
-  
-    return throwError(err.message); // Use throwError instead of Observable.throw
+  public handleError(err: HttpErrorResponse): Observable<any> {
+    console.log('Error Handler');
+    console.error(err.message);
+    return throwError(err.message);
   }
 }

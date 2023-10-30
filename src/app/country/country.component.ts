@@ -7,11 +7,13 @@ import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-country',
-  templateUrl: '/country.component.html',
+  templateUrl:'./country.component.html',
   styleUrls: ['./country.component.css'],
   providers: [Location]
 })
 export class CountryComponent implements OnInit {
+
+
   public countries: AppInterface[]=[];
   public returnParameters!: Subscription|undefined;
   public currencyParameter: boolean = false;
@@ -20,12 +22,13 @@ export class CountryComponent implements OnInit {
   public regionSelected: string='';
   public subregionSelected: string='';
 
+ 
   constructor(
     public _route: ActivatedRoute,
     public router: Router,
     public worldHttpService: WorldHttpService,
     public location: Location
-  ) { }
+  ) {}
 
   ngOnInit() {
     this.returnParameters = this._route.queryParams.subscribe(params => {
@@ -81,7 +84,7 @@ export class CountryComponent implements OnInit {
   }
 
   public subregionSelect(event: any) {
-    this.worldHttpService.getAllCountriesFromSubRegion(event).subscribe((data: AppInterface[]) => {
+    this.worldHttpService.getAllCountriesFromRegion(event).subscribe((data: AppInterface[]) => {
       this.countries = data;
       console.log(this.countries);
     }, (error: { errorMessage: any; }) => {
