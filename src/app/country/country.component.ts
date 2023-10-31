@@ -1,42 +1,40 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from "@angular/router";
-import { WorldHttpService } from "../world-http.service";
-import { Location } from "@angular/common";
-import { AppInterface } from "../../app/application-interface";
+import { ActivatedRoute, Router } from '@angular/router';
+import { WorldHttpService } from '../world-http.service';
+import { Location } from '@angular/common';
+import { AppInterface } from '../../app/application-interface';
 import { Subscription } from 'rxjs';
 import { CountriesDTO } from '../dtos/countries-dto';
 
 @Component({
   selector: 'app-country',
-  templateUrl:'./country.component.html',
+  templateUrl: './country.component.html',
   styleUrls: ['./country.component.css'],
-  providers: [Location]
+  providers: [Location],
 })
 export class CountryComponent implements OnInit {
-
-
-  public countries: CountriesDTO[]=[];
-  public returnParameters!: Subscription|undefined;
+  public countries: AppInterface[] = [];
+  public returnParameters!: Subscription | undefined;
   public currencyParameter: boolean = false;
   public languageParameter: boolean = false;
-  public region: string='';
-  public regionSelected: string='';
-  public subregionSelected: string='';
+  public region: string = '';
+  public regionSelected: string = '';
+  public subregionSelected: string = '';
+  public languagesLength: number | undefined;
 
- 
   constructor(
     public _route: ActivatedRoute,
     public router: Router,
     public worldHttpService: WorldHttpService,
-    public location: Location
+    public location: Location,
   ) {}
 
   ngOnInit() {
-    this.returnParameters = this._route.queryParams.subscribe(params => {
-      if (params["currency"]) {
+    this.returnParameters = this._route.queryParams.subscribe((params) => {
+      if (params['currency']) {
         this.currencyParameter = true;
-        this.getCountryByCurrency(params["currency"]);
-      } else if (params["language"]) {
+        this.getCountryByCurrency(params['currency']);
+      } else if (params['language']) {
         this.languageParameter = true;
         // this.getCountryByLanguage(params["language"]);
       } else {
@@ -51,9 +49,9 @@ export class CountryComponent implements OnInit {
             this.countries = data;
             console.log(this.countries);
           },
-          (error: { errorMessage: any; }) => {
+          (error: { errorMessage: any }) => {
             console.log(error.errorMessage);
-          }
+          },
         );
       }
     });
@@ -64,32 +62,40 @@ export class CountryComponent implements OnInit {
   }
 
   getCountryByCurrency(code: any) {
-    this.worldHttpService.getCountryByCurrency(code).subscribe((data: any[]) => {
-      this.countries = data;
-    });
+    this.worldHttpService
+      .getCountryByCurrency(code)
+      .subscribe((data: any[]) => {
+        this.countries = data;
+      });
   }
 
-//   getCountryByLanguage(code: any) {
-//     this.worldHttpService.getCountryByLanguage(code).subscribe((data) => {
-//       this.countries = data;
-//     });
-//   }
+  //   getCountryByLanguage(code: any) {
+  //     this.worldHttpService.getCountryByLanguage(code).subscribe((data) => {
+  //       this.countries = data;
+  //     });
+  //   }
 
   public regionSelect(event: any) {
-    this.worldHttpService.getAllCountriesFromRegion(event).subscribe((data: AppInterface[]) => {
-      this.countries = data;
-      console.log(this.countries);
-    }, (error: { errorMessage: any; }) => {
-      console.log(error.errorMessage);
-    });
+    this.worldHttpService.getAllCountriesFromRegion(event).subscribe(
+      (data: AppInterface[]) => {
+        this.countries = data;
+        console.log(this.countries);
+      },
+      (error: { errorMessage: any }) => {
+        console.log(error.errorMessage);
+      },
+    );
   }
 
   public subregionSelect(event: any) {
-    this.worldHttpService.getAllCountriesFromRegion(event).subscribe((data: AppInterface[]) => {
-      this.countries = data;
-      console.log(this.countries);
-    }, (error: { errorMessage: any; }) => {
-      console.log(error.errorMessage);
-    });
+    this.worldHttpService.getAllCountriesFromRegion(event).subscribe(
+      (data: AppInterface[]) => {
+        this.countries = data;
+        console.log(this.countries);
+      },
+      (error: { errorMessage: any }) => {
+        console.log(error.errorMessage);
+      },
+    );
   }
 }
