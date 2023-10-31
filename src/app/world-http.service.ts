@@ -9,25 +9,29 @@ export class WorldHttpService {
 
   constructor(private _http: HttpClient) {}
 
-  public getAllCountriesFromRegion(region: string, params: any): Observable<any> {
-    return this.http.get(`${this.url}region/${region}?`, {params})
-      .pipe(
-        catchError(this.handleError)
-      );
+  public getAllCountriesFromRegion(
+    region: string,
+    params?: any,
+  ): Observable<any> {
+    return this._http
+      .get(`${this.url}region/${region}?`, { params })
+      .pipe(catchError(this.handleError));
   }
 
   public getCountryByLanguage(code: string): Observable<any> {
-    return this._http.get(`${this.url}lang/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this._http
+      .get(
+        `${this.url}lang/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`,
+      )
+      .pipe(catchError(this.handleError));
   }
 
   public getCountryByCurrency(code: string): Observable<any> {
-    return this._http.get(`${this.url}currency/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`)
-      .pipe(
-        catchError(this.handleError)
-      );
+    return this._http
+      .get(
+        `${this.url}currency/${code}?fields=name;capital;callingCodes;region;subregion;timezones;currencies;languages;flag;topLevelDomain;alpha2Code;alpha3Code;population;area;latlng`,
+      )
+      .pipe(catchError(this.handleError));
   }
 
   public handleError(err: HttpErrorResponse): Observable<any> {

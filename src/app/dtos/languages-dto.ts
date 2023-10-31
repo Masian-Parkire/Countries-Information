@@ -1,8 +1,8 @@
 export class LanguagesDTO {
-    name: string;
+  name: string;
 
-    constructor(data: any) {
-        this.name = data['name'];
-    }
-
+  length: number;
+  constructor(data: any) {
+    this.name = data['name'];
+  }
 }
